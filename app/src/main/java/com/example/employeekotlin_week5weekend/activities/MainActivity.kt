@@ -63,29 +63,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var dbHelper : DatabaseHelper =
-        DatabaseHelper(this)
-    var employeeNames = ArrayList<Employee>()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-         //FOR TESTING DATABASE RETRIEVAL
-
-        var employee2 = Employee("Md", "Rahman", "5656 Ming Dr.", "Englewood",
-            "CO", "80224", "1", "developer","Android")
-        var employee3 = Employee("Miley", "Ras", "4164 W. St", "Centinneal",
-            "AK", "80111", "2", "human resources","iOS")
-        dbHelper.insertEmployee(employee2)
-        dbHelper.insertEmployee(employee3)
-        var employee4 = Employee("Janet", "SnakeHole", "7744 W. Ivy St", "Cinncinati",
-            "OH", "80445", "3", "human resources","iOS")
-        var employee5 = Employee("Michael", "Jackson", "5678 E. Jack St", "Atlanta",
-            "GA", "30089", "4", "developer", "Windows");
-        dbHelper.insertEmployee(employee4)
-        dbHelper.insertEmployee(employee5)
     }
 
     fun onClick(view : View) {
