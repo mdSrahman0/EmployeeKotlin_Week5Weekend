@@ -1,4 +1,4 @@
-package com.example.employeekotlin_week5weekend
+package com.example.employeekotlin_week5weekend.pojo
 
 data class Employee(var firstName : String, var lastName : String, var address : String,
                     var city : String, var state: String, var zip : String,

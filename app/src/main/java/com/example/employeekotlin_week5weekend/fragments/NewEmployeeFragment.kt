@@ -1,4 +1,4 @@
-package com.example.employeekotlin_week5weekend
+package com.example.employeekotlin_week5weekend.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
+import com.example.employeekotlin_week5weekend.database.DatabaseHelper
+import com.example.employeekotlin_week5weekend.pojo.Employee
+import com.example.employeekotlin_week5weekend.R
 import kotlinx.android.synthetic.main.fragment_new_employee.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,11 +18,10 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class NewEmployeeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    private lateinit var dbHelper : DatabaseHelper
+    private var dbHelper: DatabaseHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,33 +32,36 @@ class NewEmployeeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        Log.d("TAG", "NewEmployeeFragment onCreateView")
         val view = inflater.inflate(R.layout.fragment_new_employee, container, false)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("TAG", "Inside NewEmployeeFragment onViewCreated")
         super.onViewCreated(view, savedInstanceState)
 
         btnSendNewEmployee.setOnClickListener {
-            var firstName = view?.findViewById<EditText>(R.id.etfName)?.text.toString()
-            var lastName = view?.findViewById<EditText>(R.id.etLName)?.text.toString()
-            var strAddr = view?.findViewById<EditText>(R.id.etStrAddr)?.text.toString()
-            var city = view?.findViewById<EditText>(R.id.etCity)?.text.toString()
-            var state = view?.findViewById<EditText>(R.id.etState)?.text.toString()
-            var zip = view?.findViewById<EditText>(R.id.etZip)?.text.toString()
-            var taxId = view?.findViewById<EditText>(R.id.etTaxID)?.text.toString()
-            var position = view?.findViewById<EditText>(R.id.etPosition)?.text.toString()
-            var department = view?.findViewById<EditText>(R.id.etPosition)?.text.toString()
+            val firstName = view.findViewById<EditText>(R.id.etfName)?.text?.trim().toString()
+            val lastName = view.findViewById<EditText>(R.id.etLName)?.text?.trim().toString()
+            val strAddr = view.findViewById<EditText>(R.id.etStrAddr)?.text?.trim().toString()
+            val city = view.findViewById<EditText>(R.id.etCity)?.text?.trim().toString()
+            val state = view.findViewById<EditText>(R.id.etState)?.text?.trim().toString()
+            val zip = view.findViewById<EditText>(R.id.etZip)?.text?.trim().toString()
+            val taxId = view.findViewById<EditText>(R.id.etTaxID)?.text?.trim().toString()
+            val position = view.findViewById<EditText>(R.id.etPosition)?.text?.trim().toString()
+            val department = view.findViewById<EditText>(R.id.etDepartment)?.text?.trim().toString()
              //pass info in as a new employee. in the interface, pass that employee back to the
              //calling employeelist activity and update the list
-            val employee = Employee(firstName, lastName, strAddr, city, state, zip, taxId, position, department)
-
-            //dbHelper = DatabaseHelper(this)
-            Log.d("TAG", employee.firstName)
-
+            val employee = Employee(
+                firstName,
+                lastName,
+                strAddr,
+                city,
+                state,
+                zip,
+                taxId,
+                position,
+                department
+            )
             val t = Thread(runnable(employee))
             t.start()
         }
@@ -69,9 +73,9 @@ class NewEmployeeFragment : Fragment() {
         return Runnable {
             try {
                 Log.d("TAG", "inside NewEmployeeFragment runnable - try block.")
-                dbHelper.insertEmployee(employee)
-                Log.d("TAG", "${dbHelper.getAllEmployeesByDepartment("Android")}")
-                //listener?.onFragmentInteraction(employee)
+                dbHelper?.insertEmployee(employee)
+                //Log.d("TAG", "${dbHelper.getAllEmployeesByDepartment("Android")}")
+                listener?.onNewEmployeeFragmentInteraction()
                 Thread.sleep(4000)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
@@ -80,15 +84,16 @@ class NewEmployeeFragment : Fragment() {
     }
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(employee : Employee)
+        fun onNewEmployeeFragmentInteraction()
     }
 
-    fun onButtonPressed(employee: Employee) {
-        listener?.onFragmentInteraction(employee)
+    fun onButtonPressed() {
+        listener?.onNewEmployeeFragmentInteraction()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        dbHelper = DatabaseHelper(activity)
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {

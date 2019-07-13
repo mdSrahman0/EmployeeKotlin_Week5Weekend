@@ -10,15 +10,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".EmployeeListActivity"
+                android:name=".activities.EmployeeListActivity"
                 android:label="@string/title_activity_employee_list"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".EmployeeList">
+        <activity android:name=".activities.FilterEmployeeActivity">
         </activity>
-        <activity android:name=".FilterEmployeeActivity">
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

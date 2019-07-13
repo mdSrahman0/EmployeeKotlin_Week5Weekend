@@ -18,5 +18,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="employee_deleted">Enter taxId of employee you would like removed</string>
+    <string name="view_emp_details">Enter Tax ID of employee you desire to view</string>
 
 </resources>

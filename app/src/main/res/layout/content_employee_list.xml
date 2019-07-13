@@ -7,9 +7,9 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/app_bar_employee_list"
-        tools:context=".EmployeeListActivity"
-        android:background="@color/colorAccent"
-        android:visibility="visible">
+        tools:context=".activities.EmployeeListActivity"
+        android:background="@color/colorLightGreen"
+        android:id="@+id/employeeList">
 
     <TextView
             android:id="@+id/tvEmployeeListInfo"
@@ -25,15 +25,15 @@
     <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/tvEmployeeListInfo">
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmployeeListInfo">
     </ListView>
 
     <FrameLayout
-            android:id="@+id/frgNewEmployeePlaceHolder"
+            android:id="@+id/frgPlaceHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listView"
             app:layout_constraintLeft_toLeftOf="parent">
     </FrameLayout>
 
